@@ -47,6 +47,9 @@
 
 ## 安装
 
+> 只想装上就用：看 [`docs/QUICKSTART.md`](docs/QUICKSTART.md)（5 分钟版，含截图位、常见报错对照）。
+> 下面是完整清单和开发调试方式。
+
 ```bash
 # 从 GitHub
 magpie plugin add github:goodtome/magpie-teleagent-login
