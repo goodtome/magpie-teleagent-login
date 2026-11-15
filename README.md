@@ -143,7 +143,8 @@ export TELEAGENT_API_KEY=<你的网关 apiKey>
 
 ## 只读工具 `points`
 
-插件给 agent 挂了一个工具（全名 `<插件短名>_points`，通常为 `teleagent_points`）。
+插件给 agent 挂了一个工具，全名是 `<插件目录名>_points`——从 GitHub 安装时实际为
+`magpie-teleagent-login_points`，从本地目录安装时取目录名。
 无参数、无副作用、不消耗积分、不触发领取，返回余额、到期时间、套餐名、今日是否已领、
 可领积分、累计签到天数。
 
