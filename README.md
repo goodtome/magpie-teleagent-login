@@ -230,6 +230,53 @@ magpie provider test teleagent  # 3. 链路通不通（一次真实请求，花�
 上游风控对「合成探测」很敏感：批量试模型、超大填充体、批量合成工具名、反复试签名变体
 （`40104` 刷屏本身就是异常流量）都可能直接换来 `40109`。这些数字不是性能参数。
 
+## DeepSeek Harness 里报「context compaction failed」
+
+`chat-nano`（100K）和 `chat-lite`（100K）在 DSH 里可能切不过去：
+
+```
+Cannot switch to magpie/teleagent/chat-nano: context compaction failed:
+compaction still above threshold after 2 compaction attempts
+(36623 estimated tokens >= threshold 18080)
+```
+
+这不是插件的错，也不是 token 的问题。DSH 的 `compaction-basic` 默认给每个模型留
+65536 个 token 的压缩余量，阈值算法是：
+
+```
+threshold = min(contextWindow * 0.8, contextWindow - 本次请求 maxTokens - headroomTokens)
+```
+
+100000 − 16384 − 65536 = **18080**。只有 100K 窗口的模型被这个默认值挤到几乎没有可用空间，
+换模型时的自检压缩必然失败。400K 的那三个模型不会（400000 − 65536 − 65536 = 268928）。
+
+在 DSH 的个人补丁层（`~/.dsh/profiles/<profile>/cordis.patch.yml`）末尾加一段，给小窗口模型
+单独放宽：
+
+```yaml
+- id: compaction-basic
+  name: "@deepseek-ai/dsh-compaction-basic"
+  config:
+    modelPolicies:
+      - provider: magpie
+        model: teleagent/chat-nano
+        headroomTokens: 4096
+        maxTokens: 2048
+        compactionRetries: 3
+      - provider: magpie
+        model: teleagent/chat-lite
+        headroomTokens: 4096
+        maxTokens: 2048
+        compactionRetries: 3
+```
+
+改完 → 阈值变成 `min(80000, 100000 − 16384 − 4096) = 79520`，`36623 < 79520` 通过。
+这一段要**重启 DSH** 才生效：补丁层是启动时 compose 的，运行中手改文件不会被读，
+而且运行中的进程会用内存里的配置覆盖文件。重启前先确认文件里还留着这段。
+
+`provider` 必须是 DSH 里的 provider id（网关接入时是 `magpie`），`model` 是 DSH 里的
+模型 id（带渠道前缀，如 `teleagent/chat-nano`），两者都对不上就不会匹配。
+
 ## 已知限制
 
 - 上游无公开协议文档，靠逆向，变了要适配
