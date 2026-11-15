@@ -1,0 +1,29 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 本机凭据（插件运行时写的数据目录不应出现在仓库里）
+accounts.json
+*.accounts.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+
+# 产物与日志
+dist/
+coverage/
+*.log
+npm-debug.log*
+bun-debug.log*
+.magpie/
+tmp/

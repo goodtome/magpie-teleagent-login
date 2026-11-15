@@ -1,0 +1,58 @@
+{
+  "name": "magpie-teleagent-login",
+  "version": "0.2.0",
+  "description": "magpie / OpenCode provider plugin for TeleAgent (天翼 AI 星辰超级智能体): built-in sign-in (browser or manual token), no desktop client required",
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.mjs",
+    "lib",
+    "docs",
+    "assets",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "magpie",
+    "magpie-plugin",
+    "opencode",
+    "opencode-plugin",
+    "teleagent",
+    "teleai",
+    "teleagent-login",
+    "ai-gateway"
+  ],
+  "license": "MIT",
+  "author": "goodtome",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goodtome/magpie-teleagent-login.git"
+  },
+  "homepage": "https://github.com/goodtome/magpie-teleagent-login#readme",
+  "bugs": {
+    "url": "https://github.com/goodtome/magpie-teleagent-login/issues"
+  },
+  "scripts": {
+    "test": "bun test test/"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "os": [
+    "darwin",
+    "win32",
+    "linux"
+  ],
+  "magpie": {
+    "name": "TeleAgent 模型（免客户端登录）",
+    "summary": {
+      "en": "Unofficial TeleAgent models in magpie with built-in sign-in: browser login or manual token. No desktop client, no API key application. Ships points balance and daily check-in.",
+      "zh": "非官方接入 TeleAgent（天翼 AI 星辰超级智能体）的 5 个模型：插件自己完成登录，浏览器授权或手动粘贴 token，无需桌面客户端、无需申请 API Key。附带积分余额与每日签到。"
+    },
+    "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwMDVhY2MiLz48cGF0aCBkPSJNMjAgNDJWMjJsMjQgMjBWMjIiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9Im5vbmUiLz48L3N2Zz4="
+  }
+}
